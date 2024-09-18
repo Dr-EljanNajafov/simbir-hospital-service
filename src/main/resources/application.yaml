@@ -25,3 +25,8 @@ server:
 logging:
   level:
     root: info
+
+services:
+  payment-service:
+    host: //localhost
+    port: 8090
