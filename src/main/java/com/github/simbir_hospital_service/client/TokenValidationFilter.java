@@ -88,7 +88,7 @@ public class TokenValidationFilter extends OncePerRequestFilter {
         log.info("Token validation filter triggered for request: {}", request.getRequestURI());
 
         // Здесь мы используем жестко закодированный токен, но в реальной ситуации токен приходит в заголовке
-        String token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyNjgxOTAyOCwiZXhwIjoxNzI2ODIwNDY4fQ.ql1H3Bq-kXAgMgTgLzRXf_rVB6jz7JyAfK8KmYhZelM";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyNjgxOTAyOCwiZXhwIjoxNzI2ODIwNDY4fQ.ql1H3Bq-kXAgMgTgLzRXf_rVB6jz7JyAfK8KmYhZelM";
         log.info("Authorization token: {}", token);
 
         try {
