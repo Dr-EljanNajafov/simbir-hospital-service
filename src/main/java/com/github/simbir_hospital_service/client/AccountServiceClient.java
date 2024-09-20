@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "account-service",  url = "${services.payment-service.host}:${services.payment-service.port}")
+@FeignClient(name = "account-service",  url = "${services.account-service.host}:${services.account-service.port}")
 @Component
 public interface AccountServiceClient {
 

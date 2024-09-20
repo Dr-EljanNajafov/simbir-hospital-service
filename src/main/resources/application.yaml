@@ -27,6 +27,6 @@ logging:
     root: info
 
 services:
-  payment-service:
+  account-service:
     host: //localhost
     port: 8090

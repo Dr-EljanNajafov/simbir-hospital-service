@@ -1,4 +1,4 @@
-package com.github.simbir_hospital_service.config;
+package com.github.simbir_hospital_service.util.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

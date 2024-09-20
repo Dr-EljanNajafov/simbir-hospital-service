@@ -1,5 +1,11 @@
-package com.github.simbir_hospital_service.hospital;
+package com.github.simbir_hospital_service.controller;
 
+import com.github.simbir_hospital_service.client.AccountServiceClient;
+import com.github.simbir_hospital_service.config.context.UserContext;
+import com.github.simbir_hospital_service.hospital.request.GetHospitalRequest;
+import com.github.simbir_hospital_service.hospital.Hospital;
+import com.github.simbir_hospital_service.dto.HospitalDto;
+import com.github.simbir_hospital_service.service.HospitalService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +20,18 @@ import java.util.List;
 public class HospitalController {
 
     private final HospitalService hospitalService;
+    private final AccountServiceClient accountServiceClient;
+    private final UserContext userContext;
+
+    private boolean isUserAuthorized() {
+        String token = userContext.getToken();
+        if (token == null) {
+            return false;
+        }
+
+        ResponseEntity<?> validationResult = accountServiceClient.validateToken(token);
+        return validationResult.getStatusCode().is2xxSuccessful();
+    }
 
     @Operation(summary = "Получение списка больниц")
     @GetMapping
@@ -21,6 +39,9 @@ public class HospitalController {
             @RequestParam int from,
             @RequestParam int count
     ) {
+        if (!isUserAuthorized()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         GetHospitalRequest getHospitalRequest = GetHospitalRequest
                 .builder()
                 .from(from)

@@ -1,5 +1,6 @@
 package com.github.simbir_hospital_service.config;
 
+import com.github.simbir_hospital_service.client.TokenValidationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

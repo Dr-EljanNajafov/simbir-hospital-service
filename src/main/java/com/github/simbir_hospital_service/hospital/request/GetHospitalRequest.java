@@ -1,4 +1,4 @@
-package com.github.simbir_hospital_service.hospital;
+package com.github.simbir_hospital_service.hospital.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
