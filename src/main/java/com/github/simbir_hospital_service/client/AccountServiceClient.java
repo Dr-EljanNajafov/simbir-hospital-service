@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface AccountServiceClient {
 
     @GetMapping("/api/Authentication/Validate")
-    ResponseEntity<?> validateToken(@RequestHeader("Authorization") String token);
+    ResponseEntity<?> validateToken(@RequestHeader("accessToken") String token);
 }
