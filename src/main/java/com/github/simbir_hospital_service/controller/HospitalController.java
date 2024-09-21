@@ -100,6 +100,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -171,6 +172,7 @@ public class HospitalController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<HospitalDto> createHospital(@RequestBody HospitalDto hospitalDto) {
         log.info("Creating a new hospital with name: {}", hospitalDto.name());
 
@@ -181,6 +183,7 @@ public class HospitalController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<HospitalDto> updateHospital(@PathVariable Long id, @RequestBody HospitalDto hospitalDto) {
         log.info("Updating hospital with id: {}", id);
 
@@ -196,6 +199,7 @@ public class HospitalController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<Void> deleteHospital(@PathVariable Long id) {
         log.info("Deleting hospital with id: {}", id);
 
