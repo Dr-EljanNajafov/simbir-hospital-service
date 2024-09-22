@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,47 +17,54 @@ import java.io.IOException;
 @Component
 public class TokenValidationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private AccountServiceClient accountServiceClient;
+    private final AccountServiceClient accountServiceClient;
+
+    public TokenValidationFilter(AccountServiceClient accountServiceClient) {
+        this.accountServiceClient = accountServiceClient;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        log.info("Token validation filter triggered for request: {}", request.getRequestURI());
+        String requestUri = request.getRequestURI();
 
-        String token = request.getHeader("Authorization");
-//        if (token == null || !token.startsWith("Bearer ")) {
-//            log.warn("Authorization token is missing or improperly formatted");
-//            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-//            response.getWriter().write("Authorization token is missing or improperly formatted");
-//            return;
-//        }
-//
-//        token = token.substring(7); // Убираем префикс 'Bearer '
-
-        token = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJhZG1pbiJdLCJzdWIiOiJhZG1pbiIsImlhdCI6MTcyNjg5NzY1OSwiZXhwIjoxNzI2ODk5MDk5fQ.ce5M33IbA9fECy71GTYdXvhC97oIJVdlfBLIIgexglA";
-
-        log.info("Validating token: {}", token);
-
-        try {
-            ResponseEntity<?> validationResult = accountServiceClient.validateToken(token);
-            log.info("Token validation response status: {}", validationResult.getStatusCode());
-
-            if (!validationResult.getStatusCode().is2xxSuccessful()) {
-                log.warn("Token is invalid or expired");
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                response.getWriter().write("Invalid or expired token");
-                return;
-            }
-        } catch (Exception e) {
-            log.error("Error during token validation", e);
-            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            response.getWriter().write("Error during token validation: " + e.getMessage());
+        // Исключаем Swagger UI и другие статические ресурсы из валидации токена
+        if (requestUri.startsWith("/swagger-ui") || requestUri.startsWith("/v3/api-docs")) {
+            filterChain.doFilter(request, response);
             return;
         }
 
-        log.info("Token is valid. Proceeding with request.");
+        log.info("Фильтр валидации токена вызван для запроса: {}", request.getRequestURI());
+        String token = request.getHeader("Authorization");
+
+        if (token == null || !token.startsWith("Bearer ")) {
+            log.warn("Токен авторизации отсутствует или неправильно отформатирован");
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.getWriter().write("Токен авторизации отсутствует или неправильно отформатирован");
+            return;
+        }
+
+        token = token.substring(7);
+        log.info("Проверка токена: {}", token);
+
+        try {
+            ResponseEntity<?> validationResult = accountServiceClient.validateToken(token);
+            log.info("Статус ответа валидации токена: {}", validationResult.getStatusCode());
+            if (!validationResult.getStatusCode().is2xxSuccessful()) {
+                log.warn("Токен недействителен или истек");
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                response.getWriter().write("Токен недействителен или истек");
+                return;
+            }
+        } catch (Exception e) {
+            log.error("Ошибка при валидации токена", e);
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            response.getWriter().write("Ошибка при валидации токена: " + e.getMessage());
+            return;
+        }
+
+        log.info("Токен действителен. Продолжаем выполнение запроса.");
         filterChain.doFilter(request, response);
     }
 }
