@@ -1,6 +1,5 @@
 package com.github.simbir_hospital_service.client;
 
-import com.github.simbir_hospital_service.client.AccountServiceClient;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,3 +71,4 @@ public class TokenValidationInterceptor implements HandlerInterceptor {
         return true;
     }
 }
+

@@ -1,5 +1,6 @@
 package com.github.simbir_hospital_service.client;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,10 @@ import java.io.IOException;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class TokenValidationFilter extends OncePerRequestFilter {
 
     private final AccountServiceClient accountServiceClient;
-
-    public TokenValidationFilter(AccountServiceClient accountServiceClient) {
-        this.accountServiceClient = accountServiceClient;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

@@ -1,16 +1,16 @@
 package com.github.simbir_hospital_service.controller;
 
-import com.github.simbir_hospital_service.client.AccountServiceClient;
 import com.github.simbir_hospital_service.config.context.UserContext;
-import com.github.simbir_hospital_service.hospital.request.GetHospitalRequest;
-import com.github.simbir_hospital_service.hospital.Hospital;
 import com.github.simbir_hospital_service.dto.HospitalDto;
+import com.github.simbir_hospital_service.hospital.Hospital;
+import com.github.simbir_hospital_service.hospital.request.GetHospitalRequest;
 import com.github.simbir_hospital_service.service.HospitalService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -53,9 +53,6 @@ public class HospitalController {
     @GetMapping("/{id}")
     public ResponseEntity<Hospital> getHospitalById(
             @PathVariable Long id) {
-
-        List<String> roles = userContext.getRoles();
-        log.info("Role:{} ", roles.get(0));
 
         log.info("Fetching hospital details for id: {}", id);
 
