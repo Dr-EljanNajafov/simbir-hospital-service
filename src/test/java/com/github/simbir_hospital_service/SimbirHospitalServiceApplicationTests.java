@@ -11,5 +11,4 @@ class SimbirHospitalServiceApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

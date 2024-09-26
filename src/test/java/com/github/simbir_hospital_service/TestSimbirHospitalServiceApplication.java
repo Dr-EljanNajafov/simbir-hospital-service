@@ -7,5 +7,4 @@ public class TestSimbirHospitalServiceApplication {
     public static void main(String[] args) {
         SpringApplication.from(SimbirHospitalServiceApplication::main).with(TestcontainersConfiguration.class).run(args);
     }
-
 }

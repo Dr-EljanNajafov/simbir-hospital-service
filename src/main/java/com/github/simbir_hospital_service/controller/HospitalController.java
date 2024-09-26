@@ -1,5 +1,9 @@
-package com.github.simbir_hospital_service.hospital;
+package com.github.simbir_hospital_service.controller;
 
+import com.github.simbir_hospital_service.dto.HospitalDto;
+import com.github.simbir_hospital_service.hospital.request.GetHospitalRequest;
+import com.github.simbir_hospital_service.hospital.Hospital;
+import com.github.simbir_hospital_service.service.HospitalService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

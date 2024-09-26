@@ -1,5 +1,4 @@
 -- Create `hospital` table
--- changeset author:create_hospital_table
 CREATE TABLE hospital
 (
     id            BIGSERIAL PRIMARY KEY,
@@ -17,4 +16,3 @@ CREATE TABLE hospital_rooms
     CONSTRAINT fk_hospital FOREIGN KEY (hospital_id) REFERENCES hospital (id) ON DELETE CASCADE,
     PRIMARY KEY (hospital_id, room)
 );
-
