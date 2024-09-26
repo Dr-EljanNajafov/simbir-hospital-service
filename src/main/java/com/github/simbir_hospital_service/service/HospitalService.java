@@ -2,8 +2,8 @@ package com.github.simbir_hospital_service.service;
 
 import com.github.simbir_hospital_service.dto.HospitalDto;
 import com.github.simbir_hospital_service.dto.mapper.HospitalDtoMapper;
-import com.github.simbir_hospital_service.hospital.request.GetHospitalRequest;
 import com.github.simbir_hospital_service.hospital.Hospital;
+import com.github.simbir_hospital_service.hospital.request.GetHospitalRequest;
 import com.github.simbir_hospital_service.repository.HospitalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

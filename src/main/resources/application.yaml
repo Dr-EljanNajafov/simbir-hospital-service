@@ -23,4 +23,22 @@ server:
 
 logging:
   level:
+    org:
+      springframework:
+        web:
+          FilterChainProxy: DEBUG
+          csrf:
+            CsrfFilter: DEBUG
+        security: DEBUG
     root: info
+
+log4j:
+  logger:
+    org:
+      springframework:
+        security: DEBUG
+
+services:
+  account-service:
+    host: localhost
+    port: 8090
