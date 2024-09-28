@@ -6,7 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-@EnableFeignClients
+@EnableFeignClients("com.github.simbir_hospital_service.client")
 public class SimbirHospitalServiceApplication {
     public static void main(String[] args) {
         new SpringApplicationBuilder(SimbirHospitalServiceApplication.class)
