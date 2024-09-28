@@ -71,6 +71,7 @@ public class HospitalController {
         return ResponseEntity.ok(rooms);
     }
 
+    @Operation(summary = "Создание записи о новой больнице")
     @PostMapping
     public ResponseEntity<HospitalDto> createHospital(@RequestBody HospitalDto hospitalDto) {
         if (!isUserAuthorized("admin")) {
@@ -79,17 +80,16 @@ public class HospitalController {
         log.info("Creating a new hospital with name: {}", hospitalDto.name());
 
         HospitalDto createdHospital = hospitalService.createHospital(hospitalDto);
-        log.info("Hospital created with id: {}", createdHospital.id());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdHospital);
     }
 
+    @Operation(summary = "Изменение информации о больнице по Id")
     @PutMapping("/{id}")
     public ResponseEntity<HospitalDto> updateHospital(@PathVariable Long id, @RequestBody HospitalDto hospitalDto) {
         if (!isUserAuthorized("admin")) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Доступ запрещен: недостаточно прав.");
         }
-        log.info("Updating hospital with id: {}", id);
 
         return hospitalService.updateHospital(id, hospitalDto)
                 .map(updatedHospital -> {
@@ -102,6 +102,7 @@ public class HospitalController {
                 });
     }
 
+    @Operation(summary = "Мягкое удаление записи о больнице")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHospital(@PathVariable Long id) {
         if (!isUserAuthorized("admin")) {

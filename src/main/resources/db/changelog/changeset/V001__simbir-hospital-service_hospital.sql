@@ -1,5 +1,5 @@
 -- Create `hospital` table
-CREATE TABLE hospital
+CREATE TABLE IF NOT EXISTS hospital
 (
     id            BIGSERIAL PRIMARY KEY,
     name          VARCHAR(255) NOT NULL,
@@ -8,8 +8,7 @@ CREATE TABLE hospital
 );
 
 -- Create `hospital_rooms` table
--- changeset author:create_hospital_rooms_table
-CREATE TABLE hospital_rooms
+CREATE TABLE IF NOT EXISTS hospital_rooms
 (
     hospital_id BIGINT NOT NULL,
     room        VARCHAR(255) NOT NULL,

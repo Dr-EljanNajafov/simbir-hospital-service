@@ -56,11 +56,11 @@ public class TokenValidationFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             log.error("Ошибка при валидации токена", e);
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            response.getWriter().write("Ошибка при валидации токена: " + e.getMessage());
+            response.getWriter().write("Ошибка при валидации токена: ");
             return;
         }
 
-        log.info("Токен действителен. Продолжаем выполнение запроса.");
+        log.debug("Токен действителен. Продолжаем выполнение запроса.");
         filterChain.doFilter(request, response);
     }
 }

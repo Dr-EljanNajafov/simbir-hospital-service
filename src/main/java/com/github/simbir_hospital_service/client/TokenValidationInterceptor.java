@@ -2,7 +2,7 @@ package com.github.simbir_hospital_service.client;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -11,20 +11,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class TokenValidationInterceptor implements HandlerInterceptor {
 
     private final AccountServiceClient accountServiceClient;
-
-    @Autowired
-    public TokenValidationInterceptor(AccountServiceClient accountServiceClient) {
-        this.accountServiceClient = accountServiceClient;
-    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestUri = request.getRequestURI();
 
-        // Добавьте отладочный вывод для проверки CSRF-токена
+        // отладочный вывод для проверки CSRF-токена
         String csrfToken = request.getHeader("X-CSRF-Token");
         log.info("CSRF Token: {}", csrfToken);
 
@@ -64,7 +60,6 @@ public class TokenValidationInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        log.info("Token is valid. Proceeding with request.");
         return true;
     }
 }

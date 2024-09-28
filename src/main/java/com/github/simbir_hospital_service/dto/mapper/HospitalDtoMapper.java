@@ -11,7 +11,6 @@ public class HospitalDtoMapper implements Function<Hospital, HospitalDto> {
     @Override
     public HospitalDto apply(Hospital hospital) {
         return new HospitalDto(
-                hospital.getId(),
                 hospital.getName(),
                 hospital.getAddress(),
                 hospital.getContactPhone(),
