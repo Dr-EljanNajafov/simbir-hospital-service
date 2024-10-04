@@ -29,7 +29,7 @@ ext {
 
 bootJar {
     enabled = true
-    mainClass.set('com.github.simbir_timetable_service.SimbirTimetableServiceApplication')
+    mainClass.set('com.github.simbir_hospital_service.SimbirHospitalServiceApplication')
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
