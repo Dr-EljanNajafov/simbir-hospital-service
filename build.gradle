@@ -27,6 +27,16 @@ ext {
     set('springCloudVersion', "2023.0.3")
 }
 
+bootJar {
+    enabled = true
+    mainClass.set('com.github.simbir_timetable_service.SimbirTimetableServiceApplication')
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+jar {
+    enabled = false
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     compileOnly 'org.projectlombok:lombok'
@@ -101,4 +111,8 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.bootJar {
+    archiveFileName.set("service.jar")
 }
